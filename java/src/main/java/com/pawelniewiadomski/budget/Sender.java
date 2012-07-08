@@ -1,4 +1,4 @@
-package com.pawelniewiadomski.smsplay.send;
+package com.pawelniewiadomski.budget;
 
 import com.atlassian.pageobjects.ProductInstance;
 
@@ -7,15 +7,15 @@ import javax.annotation.Nonnull;
 public class Sender {
 
     public void send(@Nonnull String to, @Nonnull String msg) {
-        PlayTestedProduct play = new PlayTestedProduct(new ProductInstance() {
+        MBankTestedProduct MBank = new MBankTestedProduct(new ProductInstance() {
             @Override
             public String getBaseUrl() {
-                return "https://logowanie.play.pl";
+                return "https://www.mbank.com.pl/";
             }
 
             @Override
             public int getHttpPort() {
-                return 80;
+                return 443;
             }
 
             @Override
@@ -25,10 +25,10 @@ public class Sender {
 
             @Override
             public String getInstanceId() {
-                return "play";
+                return "MBank";
             }
         });
 
-        play.gotoLoginPage();
+        MBank.gotoLoginPage().setCustomer("53376795").setPassword("Croissant3k").confirm();
     }
 }

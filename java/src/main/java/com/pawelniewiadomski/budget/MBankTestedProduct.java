@@ -1,4 +1,4 @@
-package com.pawelniewiadomski.smsplay.send;
+package com.pawelniewiadomski.budget;
 
 import com.atlassian.pageobjects.*;
 import com.atlassian.pageobjects.binder.InjectPageBinder;
@@ -10,20 +10,20 @@ import com.atlassian.webdriver.AtlassianWebDriverModule;
 import com.atlassian.webdriver.pageobjects.DefaultWebDriverTester;
 import com.atlassian.webdriver.pageobjects.WebDriverTester;
 import com.google.inject.Injector;
-import com.pawelniewiadomski.smsplay.send.pageobjects.LoginPage;
+import com.pawelniewiadomski.budget.pageobjects.LoginPage;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
 @Defaults(instanceId = "play", contextPath = "/", httpPort = 80)
-public class PlayTestedProduct implements TestedProduct<WebDriverTester> {
+public class MBankTestedProduct implements TestedProduct<WebDriverTester> {
 
-    private static final String TIMEOUTS_PATH = "com/pawelniewiadomski/smsplay/send/pageobjects/pageobjects-timeouts.properties";
+    private static final String TIMEOUTS_PATH = "com/pawelniewiadomski/budget/pageobjects/pageobjects-timeouts.properties";
 
     private WebDriverTester webDriverTester;
     private ProductInstance productInstance;
     private InjectPageBinder pageBinder;
 
-    public PlayTestedProduct(TestedProductFactory.TesterFactory<WebDriverTester> testerFactory, ProductInstance productInstance)
+    public MBankTestedProduct(TestedProductFactory.TesterFactory<WebDriverTester> testerFactory, ProductInstance productInstance)
     {
         this.webDriverTester = testerFactory != null ? testerFactory.create() : new DefaultWebDriverTester();
         this.productInstance = checkNotNull(productInstance);
@@ -34,7 +34,7 @@ public class PlayTestedProduct implements TestedProduct<WebDriverTester> {
                 new TimeoutsModule(PropertiesBasedTimeouts.fromClassPath(TIMEOUTS_PATH)));
     }
 
-    public PlayTestedProduct(ProductInstance productInstance)
+    public MBankTestedProduct(ProductInstance productInstance)
     {
         this(null, productInstance);
     }

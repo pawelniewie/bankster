@@ -1,4 +1,4 @@
-package com.pawelniewiadomski.smsplay.send;
+package com.pawelniewiadomski.budget;
 
 public class Main {
 
