@@ -29,6 +29,6 @@ public class Sender {
             }
         });
 
-        MBank.gotoLoginPage().setCustomer("53376795").setPassword("Croissant3k").confirm();
+        System.out.print(MBank.gotoLoginPage().setCustomer("53376795").setPassword("Croissant3k").confirm().getAccounts().toString());
     }
 }
