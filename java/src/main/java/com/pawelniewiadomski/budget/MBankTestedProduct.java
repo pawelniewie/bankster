@@ -10,7 +10,7 @@ import com.atlassian.webdriver.AtlassianWebDriverModule;
 import com.atlassian.webdriver.pageobjects.DefaultWebDriverTester;
 import com.atlassian.webdriver.pageobjects.WebDriverTester;
 import com.google.inject.Injector;
-import com.pawelniewiadomski.budget.pageobjects.LoginPage;
+import com.pawelniewiadomski.budget.pageobjects.mbank.LoginPage;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 

@@ -1,14 +1,12 @@
-package com.pawelniewiadomski.budget.pageobjects;
+package com.pawelniewiadomski.budget.pageobjects.mbank;
 
-import com.atlassian.pageobjects.Page;
-import com.atlassian.pageobjects.PageBinder;
 import com.atlassian.pageobjects.elements.ElementBy;
 import com.atlassian.pageobjects.elements.PageElement;
+import com.pawelniewiadomski.budget.pageobjects.AbstractPage;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
 
-public class LoginPage implements Page {
+public class LoginPage extends AbstractPage {
 
     @ElementBy(name="customer")
     private PageElement customer;
@@ -18,9 +16,6 @@ public class LoginPage implements Page {
 
     @ElementBy(id = "confirm")
     private PageElement confirm;
-
-    @Inject
-    private PageBinder pageBinder;
 
     @Override
     public String getUrl() {
@@ -39,8 +34,8 @@ public class LoginPage implements Page {
         return this;
     }
 
-    public FramesPage confirm() {
+    public MainFramePage confirm() {
         confirm.click();
-        return pageBinder.bind(FramesPage.class);
+        return pageBinder.bind(MainFramePage.class);
     }
 }
