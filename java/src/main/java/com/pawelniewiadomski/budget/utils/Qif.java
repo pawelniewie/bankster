@@ -12,7 +12,7 @@ public class Qif {
     public static void write(@Nonnull PrintWriter os, @Nonnull String accountName, @Nonnull Iterable<TransactionDescription> transactions) {
         writeHeader(os, accountName);
         for(TransactionDescription transaction : transactions) {
-            os.print('D'); os.println(transaction.getAccountDate().toString("dd MMM YYYY", Locale.ENGLISH));
+            os.print('D'); os.println(transaction.getAccountDate().toString("dd/MM/YY", Locale.ENGLISH));
             os.print('T'); os.println(Double.toString(transaction.getAmount()));
             os.print('M'); os.println(StringUtils.replace(transaction.getOperationDescription(), "\n", " "));
             os.println('^');

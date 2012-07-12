@@ -69,8 +69,7 @@ public class MBankClient {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            break;
-//            page = historyPage.goToFrames();
+            page = historyPage.goToFrames();
         }
 
         return result;

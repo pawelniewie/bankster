@@ -50,6 +50,11 @@
             <artifactId>joda-time</artifactId>
             <version>2.1</version>
         </dependency>
+        <!--dependency>
+            <groupId>net.sf.ofx4j</groupId>
+            <artifactId>ofx4j</artifactId>
+            <version>1.6</version>
+        </dependency-->
     </dependencies>
 
     <properties>

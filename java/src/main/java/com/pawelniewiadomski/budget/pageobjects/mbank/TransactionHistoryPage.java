@@ -33,6 +33,9 @@ public class TransactionHistoryPage extends AbstractMBankPage {
     @ElementBy(id = "Submit")
     private PageElement submit;
 
+    @ElementBy (linkText = "Rachunki")
+    private PageElement rachunki;
+
     @WaitUntil
     public TimedCondition isAt() {
         return submit.timed().isVisible();
@@ -50,7 +53,8 @@ public class TransactionHistoryPage extends AbstractMBankPage {
 
     @Nonnull
     public MainFramePage goToFrames() {
-        return product.visit(MainFramePage.class);
+        rachunki.click();
+        return pageBinder.bind(MainFramePage.class);
     }
 
     @Nonnull
