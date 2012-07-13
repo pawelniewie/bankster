@@ -1,12 +1,9 @@
-package com.pawelniewiadomski.budget;
+package com.pawelniewiadomski.budget.banks.mbank;
 
 import com.atlassian.pageobjects.ProductInstance;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.pawelniewiadomski.budget.pageobjects.mbank.MainFramePage;
-import com.pawelniewiadomski.budget.pageobjects.mbank.TransactionDescription;
-import com.pawelniewiadomski.budget.pageobjects.mbank.TransactionHistoryPage;
 import com.pawelniewiadomski.budget.utils.Qif;
 import org.apache.commons.io.IOUtils;
 
@@ -14,34 +11,13 @@ import javax.annotation.Nonnull;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
 public class MBankClient {
 
     public Map<String, File> downloadOperationsHistory(@Nonnull String username, @Nonnull String password) {
-        MBankTestedProduct MBank = new MBankTestedProduct(new ProductInstance() {
-            @Override
-            public String getBaseUrl() {
-                return "https://www.mbank.com.pl/";
-            }
-
-            @Override
-            public int getHttpPort() {
-                return 443;
-            }
-
-            @Override
-            public String getContextPath() {
-                return "";
-            }
-
-            @Override
-            public String getInstanceId() {
-                return "MBank";
-            }
-        });
+        MBankTestedProduct MBank = new MBankTestedProduct(new MBankProductInstance());
 
         Map<String, File> result = Maps.newLinkedHashMap();
         MainFramePage page = MBank.gotoLoginPage().setCustomer(username).setPassword(password).confirm();
@@ -73,5 +49,27 @@ public class MBankClient {
         }
 
         return result;
+    }
+
+    private static class MBankProductInstance implements ProductInstance {
+        @Override
+        public String getBaseUrl() {
+            return "https://www.mbank.com.pl/";
+        }
+
+        @Override
+        public int getHttpPort() {
+            return 443;
+        }
+
+        @Override
+        public String getContextPath() {
+            return "";
+        }
+
+        @Override
+        public String getInstanceId() {
+            return "MBank";
+        }
     }
 }

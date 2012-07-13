@@ -1,4 +1,4 @@
-package com.pawelniewiadomski.budget.pageobjects.mbank;
+package com.pawelniewiadomski.budget.banks.mbank;
 
 import org.joda.time.DateTime;
 

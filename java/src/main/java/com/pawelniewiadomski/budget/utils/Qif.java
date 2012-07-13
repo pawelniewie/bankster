@@ -1,6 +1,6 @@
 package com.pawelniewiadomski.budget.utils;
 
-import com.pawelniewiadomski.budget.pageobjects.mbank.TransactionDescription;
+import com.pawelniewiadomski.budget.banks.mbank.TransactionDescription;
 import org.apache.commons.lang.StringUtils;
 
 import javax.annotation.Nonnull;

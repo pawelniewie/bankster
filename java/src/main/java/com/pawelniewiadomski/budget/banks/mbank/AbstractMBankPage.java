@@ -1,8 +1,7 @@
-package com.pawelniewiadomski.budget.pageobjects.mbank;
+package com.pawelniewiadomski.budget.banks.mbank;
 
 import com.atlassian.pageobjects.binder.Init;
-import com.pawelniewiadomski.budget.MBankTestedProduct;
-import com.pawelniewiadomski.budget.pageobjects.AbstractPage;
+import com.pawelniewiadomski.budget.banks.AbstractPage;
 import org.openqa.selenium.NoSuchFrameException;
 
 import javax.inject.Inject;

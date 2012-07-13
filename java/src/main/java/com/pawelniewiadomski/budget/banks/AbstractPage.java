@@ -1,4 +1,4 @@
-package com.pawelniewiadomski.budget.pageobjects;
+package com.pawelniewiadomski.budget.banks;
 
 import com.atlassian.pageobjects.Page;
 import com.atlassian.pageobjects.PageBinder;

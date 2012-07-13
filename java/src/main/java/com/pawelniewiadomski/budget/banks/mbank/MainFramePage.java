@@ -1,4 +1,4 @@
-package com.pawelniewiadomski.budget.pageobjects.mbank;
+package com.pawelniewiadomski.budget.banks.mbank;
 
 import com.atlassian.pageobjects.elements.ElementBy;
 import com.atlassian.pageobjects.elements.PageElement;

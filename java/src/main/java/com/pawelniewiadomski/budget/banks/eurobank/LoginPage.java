@@ -1,25 +1,28 @@
-package com.pawelniewiadomski.budget.pageobjects.mbank;
+package com.pawelniewiadomski.budget.banks.eurobank;
 
 import com.atlassian.pageobjects.elements.ElementBy;
 import com.atlassian.pageobjects.elements.PageElement;
-import com.pawelniewiadomski.budget.pageobjects.AbstractPage;
+import com.pawelniewiadomski.budget.banks.AbstractPage;
+import com.pawelniewiadomski.budget.banks.mbank.MainFramePage;
 
 import javax.annotation.Nonnull;
 
 public class LoginPage extends AbstractPage {
-
-    @ElementBy(name="customer")
+    @ElementBy(name="uzytkownik")
     private PageElement customer;
 
-    @ElementBy(name="password")
+    @ElementBy(name="hasloToken")
     private PageElement password;
 
-    @ElementBy(id = "confirm")
+    @ElementBy(name="tokenSprzetowy")
+    private PageElement token;
+
+    @ElementBy(name = "zaloguj")
     private PageElement confirm;
 
     @Override
     public String getUrl() {
-        return "logon.aspx";
+        return "bi/bezpieczenstwo_logowanie.ebk";
     }
 
     public LoginPage setCustomer(@Nonnull CharSequence customer) {
@@ -34,8 +37,15 @@ public class LoginPage extends AbstractPage {
         return this;
     }
 
+    public LoginPage setToken(@Nonnull CharSequence token) {
+        this.token.clear();
+        this.token.type(token);
+        return this;
+    }
+
     public MainFramePage confirm() {
         confirm.click();
-        return pageBinder.bind(MainFramePage.class);
+//        return pageBinder.bind(MainFramePage.class);
+        return null;
     }
 }

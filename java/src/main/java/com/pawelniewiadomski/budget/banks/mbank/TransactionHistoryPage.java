@@ -1,12 +1,10 @@
-package com.pawelniewiadomski.budget.pageobjects.mbank;
+package com.pawelniewiadomski.budget.banks.mbank;
 
 import com.atlassian.pageobjects.binder.WaitUntil;
 import com.atlassian.pageobjects.elements.*;
 import com.atlassian.pageobjects.elements.query.TimedCondition;
 import com.google.common.base.Function;
-import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
-import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -14,7 +12,6 @@ import org.openqa.selenium.By;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.swing.text.NumberFormatter;
 import java.text.*;
 import java.util.List;
 import java.util.Locale;

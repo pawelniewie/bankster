@@ -1,4 +1,4 @@
-package com.pawelniewiadomski.budget;
+package com.pawelniewiadomski.budget.banks;
 
 import com.atlassian.pageobjects.*;
 import com.atlassian.pageobjects.binder.InjectPageBinder;
@@ -10,20 +10,22 @@ import com.atlassian.webdriver.AtlassianWebDriverModule;
 import com.atlassian.webdriver.pageobjects.DefaultWebDriverTester;
 import com.atlassian.webdriver.pageobjects.WebDriverTester;
 import com.google.inject.Injector;
-import com.pawelniewiadomski.budget.pageobjects.mbank.LoginPage;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-@Defaults(instanceId = "play", contextPath = "/", httpPort = 80)
-public class MBankTestedProduct implements TestedProduct<WebDriverTester> {
-
-    private static final String TIMEOUTS_PATH = "com/pawelniewiadomski/budget/pageobjects/pageobjects-timeouts.properties";
+/**
+ * TODO: Document this class / interface here
+ *
+ * @since v5.0.1
+ */
+public abstract class AbstractTestedProduct implements TestedProduct<WebDriverTester> {
+    private static final String TIMEOUTS_PATH = "com/pawelniewiadomski/budget/banks/pageobjects-timeouts.properties";
 
     private WebDriverTester webDriverTester;
     private ProductInstance productInstance;
     private InjectPageBinder pageBinder;
 
-    public MBankTestedProduct(TestedProductFactory.TesterFactory<WebDriverTester> testerFactory, ProductInstance productInstance)
+    public AbstractTestedProduct(TestedProductFactory.TesterFactory<WebDriverTester> testerFactory, ProductInstance productInstance)
     {
         this.webDriverTester = testerFactory != null ? testerFactory.create() : new DefaultWebDriverTester();
         this.productInstance = checkNotNull(productInstance);
@@ -32,16 +34,6 @@ public class MBankTestedProduct implements TestedProduct<WebDriverTester> {
                 new AtlassianWebDriverModule(this),
                 new ElementModule(),
                 new TimeoutsModule(PropertiesBasedTimeouts.fromClassPath(TIMEOUTS_PATH)));
-    }
-
-    public MBankTestedProduct(ProductInstance productInstance)
-    {
-        this(null, productInstance);
-    }
-
-    public LoginPage gotoLoginPage()
-    {
-        return pageBinder.navigateToAndBind(LoginPage.class);
     }
 
     @Override
@@ -75,4 +67,5 @@ public class MBankTestedProduct implements TestedProduct<WebDriverTester> {
     public WebDriverTester getTester() {
         return webDriverTester;
     }
+
 }
