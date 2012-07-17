@@ -9,8 +9,12 @@ import java.util.Map;
 public class Main {
 
     public static void main(String[] args) {
-//        Map<String, File> files = new MBankClient().downloadOperationsHistory("53376795", "Croissant3k");
-        Map<String, File> files = new EurobankClient().downloadOperationsHistory("660836822", "Croissant3k", "714729");
+        Map<String, File> files;
+        if (args.length == 2) {
+            files = new MBankClient().downloadOperationsHistory(args[0], args[1]);
+        } else {
+            files = new EurobankClient().downloadOperationsHistory(args[0], args[1], args[2]);
+        }
         for(Map.Entry<String, File> file : files.entrySet()) {
             System.out.print(file.getKey());
             System.out.print('!');
