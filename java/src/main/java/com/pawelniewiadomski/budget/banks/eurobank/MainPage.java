@@ -10,10 +10,10 @@ import org.openqa.selenium.By;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.inject.Inject;
 import java.util.List;
 
 public class MainPage extends AbstractPage {
-
     @Override
     public String getUrl() {
         return "bi/produkt_lista.ebk";
@@ -24,7 +24,7 @@ public class MainPage extends AbstractPage {
         return Iterables.transform(getListOfAccounts(), new Function<PageElement, String>() {
             @Override
             public String apply(@Nullable PageElement from) {
-                return from.find(By.cssSelector("a")).getText();
+                return from.find(By.tagName("a")).getText();
             }
         });
     }
@@ -40,7 +40,7 @@ public class MainPage extends AbstractPage {
                 if (links.isEmpty()) {
                     return false;
                 }
-                if (StringUtils.startsWith(Iterables.get(links, 0).getAttribute("href"), "/bi/rachunek_szczegoly.ebk?rachunekId=")) {
+                if (StringUtils.contains(Iterables.get(links, 0).getAttribute("href"), "/bi/rachunek_szczegoly.ebk?rachunekId=")) {
                     return true;
                 }
                 return false;
