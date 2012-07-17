@@ -25,9 +25,9 @@ public class EurobankClient {
         EurobankTestedProduct bank = new EurobankTestedProduct(new EurobankProductInstance());
 
         Map<String, File> result = Maps.newLinkedHashMap();
-        bank.gotoLoginPage().setCustomer(username).setPassword(password).setToken(token).confirm();
-//        Iterable<String> accounts = page.getAccounts();
-//        for(String accountName : accounts) {
+        MainPage page = bank.gotoLoginPage().setCustomer(username).setPassword(password).setToken(token).confirm();
+        Iterable<String> accounts = page.getAccounts();
+        for(String accountName : accounts) {
 //            TransactionHistoryPage historyPage = page.openTransactionHistory(accountName).clickLastDaysRadio().submit();
 //            List<TransactionDescription> transactions = Lists.newArrayList();
 //            for (;;) {
@@ -38,20 +38,20 @@ public class EurobankClient {
 //                    break;
 //                }
 //            }
-//            try {
-//                File output = File.createTempFile("bank", ".qif");
+            try {
+                File output = File.createTempFile("bank", ".qif");
 //                PrintWriter out = new PrintWriter(output);
 //                try {
 //                    Qif.write(out, accountName, transactions);
 //                } finally {
 //                    IOUtils.closeQuietly(out);
 //                }
-//                result.put(accountName, output);
-//            } catch (IOException e) {
-//                throw new RuntimeException(e);
-//            }
+                result.put(accountName, output);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
 //            page = historyPage.goToFrames();
-//        }
+        }
 
         return result;
     }

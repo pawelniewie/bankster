@@ -43,9 +43,8 @@ public class LoginPage extends AbstractPage {
         return this;
     }
 
-    public MainFramePage confirm() {
+    public MainPage confirm() {
         confirm.click();
-//        return pageBinder.bind(MainFramePage.class);
-        return null;
+        return pageBinder.bind(MainPage.class);
     }
 }
