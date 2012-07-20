@@ -1,14 +1,10 @@
 package com.pawelniewiadomski.budget.banks.eurobank;
 
 import com.atlassian.pageobjects.ProductInstance;
-import com.atlassian.pageobjects.TestedProduct;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.pawelniewiadomski.budget.banks.mbank.MBankTestedProduct;
-import com.pawelniewiadomski.budget.banks.mbank.MainFramePage;
 import com.pawelniewiadomski.budget.banks.mbank.TransactionDescription;
-import com.pawelniewiadomski.budget.banks.mbank.TransactionHistoryPage;
 import com.pawelniewiadomski.budget.utils.Qif;
 import org.apache.commons.io.IOUtils;
 
@@ -28,29 +24,29 @@ public class EurobankClient {
         MainPage page = bank.gotoLoginPage().setCustomer(username).setPassword(password).setToken(token).confirm();
         Iterable<String> accounts = page.getAccounts();
         for(String accountName : accounts) {
-//            TransactionHistoryPage historyPage = page.openTransactionHistory(accountName).clickLastDaysRadio().submit();
-//            List<TransactionDescription> transactions = Lists.newArrayList();
-//            for (;;) {
-//                Iterables.addAll(transactions, historyPage.getTransactions());
-//                if (historyPage.isPreviousPage()) {
-//                    historyPage = historyPage.clickPreviousPage();
-//                } else {
-//                    break;
-//                }
-//            }
+            TransactionHistoryPage historyPage = page.openTransactionHistory(accountName).submit();
+            List<TransactionDescription> transactions = Lists.newArrayList();
+            for (;;) {
+                Iterables.addAll(transactions, historyPage.getTransactions());
+                if (historyPage.isPreviousPage()) {
+                    historyPage = historyPage.clickPreviousPage();
+                } else {
+                    break;
+                }
+            }
             try {
                 File output = File.createTempFile("bank", ".qif");
-//                PrintWriter out = new PrintWriter(output);
-//                try {
-//                    Qif.write(out, accountName, transactions);
-//                } finally {
-//                    IOUtils.closeQuietly(out);
-//                }
+                PrintWriter out = new PrintWriter(output);
+                try {
+                    Qif.write(out, accountName, transactions);
+                } finally {
+                    IOUtils.closeQuietly(out);
+                }
                 result.put(accountName, output);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-//            page = historyPage.goToFrames();
+            page = historyPage.goToMain();
         }
 
         return result;

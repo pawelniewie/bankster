@@ -10,7 +10,6 @@ import org.openqa.selenium.By;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.inject.Inject;
 import java.util.List;
 
 public class MainPage extends AbstractPage {
@@ -24,13 +23,13 @@ public class MainPage extends AbstractPage {
         return Iterables.transform(getListOfAccounts(), new Function<PageElement, String>() {
             @Override
             public String apply(@Nullable PageElement from) {
-                return from.find(By.tagName("a")).getText();
+                return from.findAll(By.tagName("tr")).get(0).find(By.tagName("a")).getText();
             }
         });
     }
 
     private Iterable<PageElement> getListOfAccounts() {
-        return Iterables.filter(elementFinder.findAll(By.cssSelector(".tabela_lista tbody tr td")), new Predicate<PageElement>() {
+        return Iterables.filter(elementFinder.findAll(By.cssSelector(".tabela_lista tbody")), new Predicate<PageElement>() {
             @Override
             public boolean apply(@Nullable PageElement input) {
                 if (input == null) {
@@ -46,5 +45,22 @@ public class MainPage extends AbstractPage {
                 return false;
             }
         });
+    }
+
+    @Nullable
+    protected PageElement getAccount(@Nonnull final String accountName) {
+        return Iterables.get(Iterables.filter(getListOfAccounts(), new Predicate<PageElement>() {
+            @Override
+            public boolean apply(@Nullable PageElement input) {
+                return !input.findAll(By.linkText(accountName)).isEmpty();
+            }
+        }), 0);
+    }
+
+    public TransactionHistoryPage openTransactionHistory(@Nonnull String accountName) {
+        PageElement accountElement = getAccount(accountName);
+        PageElement historyLink = accountElement.find(By.linkText("historia"));
+        historyLink.click();
+        return pageBinder.bind(TransactionHistoryPage.class);
     }
 }
