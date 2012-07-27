@@ -6,6 +6,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.pawelniewiadomski.budget.banks.mbank.TransactionDescription;
 import com.pawelniewiadomski.budget.utils.Qif;
+import net.sf.ofx4j.domain.data.common.Transaction;
 import org.apache.commons.io.IOUtils;
 
 import javax.annotation.Nonnull;
@@ -25,7 +26,7 @@ public class EurobankClient {
         Iterable<String> accounts = page.getAccounts();
         for(String accountName : accounts) {
             TransactionHistoryPage historyPage = page.openTransactionHistory(accountName).submit();
-            List<TransactionDescription> transactions = Lists.newArrayList();
+            List<Transaction> transactions = Lists.newArrayList();
             for (;;) {
                 Iterables.addAll(transactions, historyPage.getTransactions());
                 if (historyPage.isPreviousPage()) {
@@ -33,18 +34,6 @@ public class EurobankClient {
                 } else {
                     break;
                 }
-            }
-            try {
-                File output = File.createTempFile("bank", ".qif");
-                PrintWriter out = new PrintWriter(output);
-                try {
-                    Qif.write(out, accountName, transactions);
-                } finally {
-                    IOUtils.closeQuietly(out);
-                }
-                result.put(accountName, output);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
             }
             page = historyPage.goToMain();
         }

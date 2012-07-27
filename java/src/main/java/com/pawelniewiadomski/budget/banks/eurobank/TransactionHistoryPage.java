@@ -7,7 +7,8 @@ import com.atlassian.pageobjects.elements.query.TimedCondition;
 import com.google.common.base.Function;
 import com.google.common.collect.Iterables;
 import com.pawelniewiadomski.budget.banks.AbstractPage;
-import com.pawelniewiadomski.budget.banks.mbank.TransactionDescription;
+import com.pawelniewiadomski.budget.utils.OfxFactory;
+import net.sf.ofx4j.domain.data.common.Transaction;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -16,12 +17,12 @@ import org.openqa.selenium.By;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.text.ParsePosition;
 import java.util.List;
 import java.util.Locale;
 
+// http://code.google.com/p/mbank2ofx/source/browse/trunk/mBankToOFX/src/main/java/pl/sevencoins/mbanktools/MBankCSVToOFX.java
 public class TransactionHistoryPage extends AbstractPage {
 
     @ElementBy (cssSelector = "#rachunekHistoriaForm .submit")
@@ -54,17 +55,17 @@ public class TransactionHistoryPage extends AbstractPage {
         return pageBinder.bind(TransactionHistoryPage.class);
     }
 
-    public Iterable<TransactionDescription> getTransactions() {
+    public Iterable<Transaction> getTransactions() {
         return Iterables.transform(elementFinder.findAll(By.cssSelector("table.tabela_lista tbody tr")),
-                new Function<PageElement, TransactionDescription>() {
+                new Function<PageElement, Transaction>() {
                     @Override
-                    public TransactionDescription apply(@Nullable PageElement from) {
+                    public Transaction apply(@Nullable PageElement from) {
                         List<PageElement> columns = from.findAll(By.tagName("td"));
                         DateTime opDate = DateTime.parse(Iterables.get(columns, 1).getText(), dateFmt);
                         DateTime acDate = DateTime.parse(Iterables.get(columns, 0).getText(), dateFmt);
                         String opDesc = Iterables.get(columns, 2).getText();
                         String amountStr = Iterables.get(columns, 3).getText();
-                        return new TransactionDescription(opDate, acDate, opDesc, parseAmount(amountStr));
+                        return OfxFactory.createTransaction(opDate, acDate, opDesc, parseAmount(amountStr));
                     }
                 });
     }

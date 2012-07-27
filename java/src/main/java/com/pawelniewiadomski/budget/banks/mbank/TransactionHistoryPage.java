@@ -5,6 +5,8 @@ import com.atlassian.pageobjects.elements.*;
 import com.atlassian.pageobjects.elements.query.TimedCondition;
 import com.google.common.base.Function;
 import com.google.common.collect.Iterables;
+import com.pawelniewiadomski.budget.utils.OfxFactory;
+import net.sf.ofx4j.domain.data.common.Transaction;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -77,17 +79,17 @@ public class TransactionHistoryPage extends AbstractMBankPage {
         return pageBinder.bind(TransactionHistoryPage.class);
     }
 
-    public Iterable<TransactionDescription> getTransactions() {
+    public Iterable<Transaction> getTransactions() {
         return Iterables.transform(Iterables.filter(elementFinder.findAll(By.cssSelector("#account_operations ul.table li")), new HeaderOrFooterPredicate()),
-                new Function<PageElement, TransactionDescription>() {
+                new Function<PageElement, Transaction>() {
             @Override
-            public TransactionDescription apply(@Nullable PageElement from) {
+            public Transaction apply(@Nullable PageElement from) {
                 List<PageElement> dates = from.findAll(By.cssSelector("p.Date span"));
                 DateTime opDate = DateTime.parse(Iterables.get(dates, 0).getText(), dateFmt);
                 DateTime acDate = DateTime.parse(Iterables.get(dates, 1).getText(), dateFmt);
                 String opDesc = from.find(By.className("OperationDescription")).getText();
                 String amountStr = from.find(By.cssSelector("p.Amount span")).getText();
-                return new TransactionDescription(opDate, acDate, opDesc, parseAmount(amountStr));
+                return OfxFactory.createTransaction(opDate, acDate, opDesc, parseAmount(amountStr));
             }
         });
     }
