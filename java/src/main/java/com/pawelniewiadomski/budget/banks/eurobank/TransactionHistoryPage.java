@@ -19,6 +19,7 @@ import javax.annotation.Nullable;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParsePosition;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -56,6 +57,11 @@ public class TransactionHistoryPage extends AbstractPage {
     }
 
     public Iterable<Transaction> getTransactions() {
+        List<PageElement> messages = elementFinder.findAll(By.className("komunikat"));
+        if (messages.size() > 0 && messages.get(0).isVisible()) {
+            return Collections.emptyList();
+        }
+
         return Iterables.transform(elementFinder.findAll(By.cssSelector("table.tabela_lista tbody tr")),
                 new Function<PageElement, Transaction>() {
                     @Override

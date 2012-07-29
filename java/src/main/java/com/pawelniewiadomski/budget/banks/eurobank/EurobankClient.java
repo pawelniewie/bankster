@@ -5,9 +5,15 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.pawelniewiadomski.budget.banks.mbank.TransactionDescription;
+import com.pawelniewiadomski.budget.utils.OfxFactory;
 import com.pawelniewiadomski.budget.utils.Qif;
+import net.sf.ofx4j.domain.data.ResponseEnvelope;
+import net.sf.ofx4j.domain.data.banking.BankStatementResponse;
+import net.sf.ofx4j.domain.data.banking.BankStatementResponseTransaction;
 import net.sf.ofx4j.domain.data.common.Transaction;
+import net.sf.ofx4j.domain.data.common.TransactionList;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
 
 import javax.annotation.Nonnull;
 import java.io.File;
@@ -18,27 +24,41 @@ import java.util.Map;
 
 public class EurobankClient {
 
-    public Map<String, File> downloadOperationsHistory(@Nonnull String username, @Nonnull String password, @Nonnull String token) {
+    public ResponseEnvelope downloadOperationsHistory(@Nonnull String username, @Nonnull String password, @Nonnull String token) {
         EurobankTestedProduct bank = new EurobankTestedProduct(new EurobankProductInstance());
-
-        Map<String, File> result = Maps.newLinkedHashMap();
-        MainPage page = bank.gotoLoginPage().setCustomer(username).setPassword(password).setToken(token).confirm();
-        Iterable<String> accounts = page.getAccounts();
-        for(String accountName : accounts) {
-            TransactionHistoryPage historyPage = page.openTransactionHistory(accountName).submit();
-            List<Transaction> transactions = Lists.newArrayList();
-            for (;;) {
-                Iterables.addAll(transactions, historyPage.getTransactions());
-                if (historyPage.isPreviousPage()) {
-                    historyPage = historyPage.clickPreviousPage();
-                } else {
-                    break;
+        try {
+            MainPage page = bank.gotoLoginPage().setCustomer(username).setPassword(password).setToken(token).confirm();
+            Iterable<String> accounts = page.getAccounts();
+            List<BankStatementResponseTransaction> responses = Lists.newArrayList();
+            for(String accountName : accounts) {
+                TransactionHistoryPage historyPage = page.openTransactionHistory(accountName).submit();
+                List<Transaction> transactions = Lists.newArrayList();
+                for (;;) {
+                    Iterables.addAll(transactions, historyPage.getTransactions());
+                    if (historyPage.isPreviousPage()) {
+                        historyPage = historyPage.clickPreviousPage();
+                    } else {
+                        break;
+                    }
                 }
-            }
-            page = historyPage.goToMain();
-        }
 
-        return result;
+                if (!transactions.isEmpty()) {
+                    TransactionList transactionList = OfxFactory.createTransactionList(transactions);
+
+                    BankStatementResponse response = new BankStatementResponse();
+                    response.setAccount(OfxFactory.createBankAccountDetails(StringUtils.replace(accountName, " ", ""), "EFGBPLPW"));
+                    response.setCurrencyCode("PLN");
+                    response.setTransactionList(transactionList);
+
+                    responses.add(OfxFactory.createBankStatementResponseTransaction(response));
+                }
+
+                page = historyPage.goToMain();
+            }
+            return OfxFactory.createResponseEnvelope(responses);
+        } finally {
+            bank.getTester().getDriver().quit();
+        }
     }
 
     private static class EurobankProductInstance implements ProductInstance {

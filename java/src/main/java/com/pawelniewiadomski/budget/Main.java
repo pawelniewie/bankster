@@ -20,7 +20,7 @@ public class Main {
         if (args.length == 2) {
             envelope = new MBankClient().downloadOperationsHistory(args[0], args[1]);
         } else {
-            //envelope = new EurobankClient().downloadOperationsHistory(args[0], args[1], args[2]);
+            envelope = new EurobankClient().downloadOperationsHistory(args[0], args[1], args[2]);
         }
 
         File output = File.createTempFile("export", ".ofx");
