@@ -1,35 +1,34 @@
 package com.pawelniewiadomski.budget.banks.eurobank;
 
 import com.atlassian.pageobjects.ProductInstance;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.pawelniewiadomski.budget.banks.mbank.TransactionDescription;
 import com.pawelniewiadomski.budget.utils.OfxFactory;
-import com.pawelniewiadomski.budget.utils.Qif;
+import com.pawelniewiadomski.budget.utils.OfxWriter;
 import net.sf.ofx4j.domain.data.ResponseEnvelope;
 import net.sf.ofx4j.domain.data.banking.BankStatementResponse;
 import net.sf.ofx4j.domain.data.banking.BankStatementResponseTransaction;
 import net.sf.ofx4j.domain.data.common.Transaction;
 import net.sf.ofx4j.domain.data.common.TransactionList;
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 
 import javax.annotation.Nonnull;
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
 
 public class EurobankClient {
 
-    public ResponseEnvelope downloadOperationsHistory(@Nonnull String username, @Nonnull String password, @Nonnull String token) {
+    public Map<String, File> downloadOperationsHistory(@Nonnull String username, @Nonnull String password, @Nonnull String token) throws IOException {
         EurobankTestedProduct bank = new EurobankTestedProduct(new EurobankProductInstance());
         try {
             MainPage page = bank.gotoLoginPage().setCustomer(username).setPassword(password).setToken(token).confirm();
             Iterable<String> accounts = page.getAccounts();
-            List<BankStatementResponseTransaction> responses = Lists.newArrayList();
+            Map<String, File> results = Maps.newLinkedHashMap();
+
             for(String accountName : accounts) {
                 TransactionHistoryPage historyPage = page.openTransactionHistory(accountName).submit();
                 List<Transaction> transactions = Lists.newArrayList();
@@ -50,12 +49,14 @@ public class EurobankClient {
                     response.setCurrencyCode("PLN");
                     response.setTransactionList(transactionList);
 
-                    responses.add(OfxFactory.createBankStatementResponseTransaction(response));
+                    File output = File.createTempFile("bank", ".ofx");
+                    OfxWriter.writeOfx(output, OfxFactory.createResponseEnvelope(ImmutableList.of(OfxFactory.createBankStatementResponseTransaction(response))));
+                    results.put(accountName, output);
                 }
 
                 page = historyPage.goToMain();
             }
-            return OfxFactory.createResponseEnvelope(responses);
+            return results;
         } finally {
             bank.getTester().getDriver().quit();
         }
