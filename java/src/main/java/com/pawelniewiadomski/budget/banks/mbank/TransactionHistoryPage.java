@@ -8,6 +8,7 @@ import com.google.common.collect.Iterables;
 import com.pawelniewiadomski.budget.utils.OfxFactory;
 import net.sf.ofx4j.domain.data.common.Transaction;
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.openqa.selenium.By;
@@ -40,7 +41,7 @@ public class TransactionHistoryPage extends AbstractMBankPage {
         return submit.timed().isVisible();
     }
 
-    private final DateTimeFormatter dateFmt = DateTimeFormat.forPattern("dd-MM-YYYY");
+    private final DateTimeFormatter dateFmt = DateTimeFormat.forPattern("dd-MM-YYYY").withZone(DateTimeZone.forID("Poland"));
     private final DecimalFormat amountFormat;
 
     public TransactionHistoryPage() {

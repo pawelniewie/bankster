@@ -12,14 +12,14 @@ import net.sf.ofx4j.domain.data.common.*;
 import net.sf.ofx4j.domain.data.signon.SignonResponse;
 import net.sf.ofx4j.domain.data.signon.SignonResponseMessageSet;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.text.Normalizer;
+import java.util.*;
 
 /**
  * TODO: Document this class / interface here
@@ -38,6 +38,13 @@ public class OfxFactory {
         t.setName(opDesc);
         t.setId(createId(t));
         return t;
+    }
+
+    @Nonnull
+    private static String toAscii(@Nullable String input) {
+        return Normalizer
+                .normalize(StringUtils.defaultString(input, ""), Normalizer.Form.NFD)
+                .replaceAll("[^\\p{ASCII}]", "");
     }
 
     private static String createId(Transaction t) {
