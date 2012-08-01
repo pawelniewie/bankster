@@ -5,6 +5,7 @@ import com.google.common.collect.Collections2;
 import com.google.common.collect.ImmutableSortedSet;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Ordering;
+import com.pawelniewiadomski.budget.banks.TransactionTypeMapper;
 import net.sf.ofx4j.domain.data.ResponseEnvelope;
 import net.sf.ofx4j.domain.data.ResponseMessageSet;
 import net.sf.ofx4j.domain.data.banking.*;
@@ -15,6 +16,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
+import org.joda.time.Duration;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -28,20 +30,23 @@ import java.util.*;
  */
 public class OfxFactory {
 
-    public static Transaction createTransaction(DateTime opDate, DateTime acDate, String opDesc, double v) {
+    public static final Duration HALF_DAY = Duration.standardHours(12);
+
+    public static Transaction createTransaction(DateTime opDate, DateTime acDate, String opDesc, double v, TransactionTypeMapper mapper) {
+        // YNAB can't handle time zone properly so add enough hours that the imported date will still be on the transaction date
         Transaction t = new Transaction();
         t.setAmount(v);
-        t.setDateInitiated(opDate.toDate());
-        t.setDatePosted(opDate.toDate());
-        t.setDateAvailable(acDate.toDate());
+        t.setDateInitiated(opDate.toDateMidnight().plus(HALF_DAY).toDate());
+        t.setDatePosted(opDate.toDateMidnight().plus(HALF_DAY).toDate());
+        t.setDateAvailable(acDate.toDateMidnight().plus(HALF_DAY).toDate());
         t.setTransactionType(TransactionType.DEBIT);
-        t.setName(opDesc);
+        t.setName(StringUtils.replace(opDesc, "\n", " "));
         t.setId(createId(t));
         return t;
     }
 
     @Nonnull
-    private static String toAscii(@Nullable String input) {
+    public static String toAscii(@Nullable String input) {
         return Normalizer
                 .normalize(StringUtils.defaultString(input, ""), Normalizer.Form.NFD)
                 .replaceAll("[^\\p{ASCII}]", "");

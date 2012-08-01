@@ -7,6 +7,7 @@ import com.atlassian.pageobjects.elements.query.TimedCondition;
 import com.google.common.base.Function;
 import com.google.common.collect.Iterables;
 import com.pawelniewiadomski.budget.banks.AbstractPage;
+import com.pawelniewiadomski.budget.banks.TransactionTypeMapper;
 import com.pawelniewiadomski.budget.utils.OfxFactory;
 import net.sf.ofx4j.domain.data.common.Transaction;
 import org.joda.time.DateTime;
@@ -33,6 +34,7 @@ public class TransactionHistoryPage extends AbstractPage {
 
     private final DateTimeFormatter dateFmt = DateTimeFormat.forPattern("dd-MM-YYYY").withZone(DateTimeZone.forID("Poland"));
     private final DecimalFormat amountFormat;
+    private final TransactionTypeMapper transactionTypeMapper = new EurobankTransactionMapper();
 
     public TransactionHistoryPage() {
         amountFormat = (DecimalFormat) NumberFormat.getNumberInstance(new Locale("en"));
@@ -73,7 +75,7 @@ public class TransactionHistoryPage extends AbstractPage {
                         DateTime acDate = dateFmt.parseDateTime(Iterables.get(columns, 0).getText());
                         String opDesc = Iterables.get(columns, 2).getText();
                         String amountStr = Iterables.get(columns, 3).getText();
-                        return OfxFactory.createTransaction(opDate, acDate, opDesc, parseAmount(amountStr));
+                        return OfxFactory.createTransaction(opDate, acDate, opDesc, parseAmount(amountStr), transactionTypeMapper);
                     }
                 });
     }
