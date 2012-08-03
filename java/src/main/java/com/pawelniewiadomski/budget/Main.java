@@ -16,13 +16,22 @@ import java.util.Map;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        Map<String, File> results;
+        ResponseEnvelope envelope = null;
         if (args.length == 2) {
-            results = new MBankClient().downloadOperationsHistory(args[0], args[1]);
+            envelope = new MBankClient().downloadOperationsHistory(args[0], args[1]);
         } else {
-            results = new EurobankClient().downloadOperationsHistory(args[0], args[1], args[2]);
+            envelope = new EurobankClient().downloadOperationsHistory(args[0], args[1], args[2]);
         }
 
-        System.out.println(results.toString());
+        File output = File.createTempFile("export", ".ofx");
+        final OFXV2Writer ofxWriter = new OFXV2Writer(new FileWriter(output));
+        ofxWriter.setWriteAttributesOnNewLine(true);
+        AggregateMarshaller marshaller = new AggregateMarshaller();
+        try {
+            marshaller.marshal(envelope, ofxWriter);
+        } finally {
+            ofxWriter.close();
+        }
+        System.out.println(output);
     }
 }

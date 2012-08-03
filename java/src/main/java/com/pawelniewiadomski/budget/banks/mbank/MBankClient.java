@@ -20,12 +20,12 @@ import java.util.Map;
 
 public class MBankClient {
 
-    public Map<String, File> downloadOperationsHistory(@Nonnull String username, @Nonnull String password) throws IOException {
+    public ResponseEnvelope downloadOperationsHistory(@Nonnull String username, @Nonnull String password) throws IOException {
         MBankTestedProduct bank = new MBankTestedProduct(new MBankProductInstance());
         try {
             MainFramePage page = bank.gotoLoginPage().setCustomer(username).setPassword(password).confirm();
             Iterable<String> accounts = page.getAccounts();
-            Map<String, File> results = Maps.newLinkedHashMap();
+            List<BankStatementResponseTransaction> responses = Lists.newArrayList();
 
             for(String accountName : accounts) {
                 TransactionHistoryPage historyPage = page.openTransactionHistory(accountName).clickLastDaysRadio().submit();
@@ -47,15 +47,13 @@ public class MBankClient {
                     response.setCurrencyCode("PLN");
                     response.setTransactionList(transactionList);
 
-                    File output = File.createTempFile("bank", ".ofx");
-                    OfxWriter.writeOfx(output, OfxFactory.createResponseEnvelope(ImmutableList.of(OfxFactory.createBankStatementResponseTransaction(response))));
-                    results.put(accountName, output);
+                    responses.add(OfxFactory.createBankStatementResponseTransaction(response));
                 }
 
                 page = historyPage.goToFrames();
             }
 
-            return results;
+            return OfxFactory.createResponseEnvelope(responses);
         } finally {
             bank.getTester().getDriver().quit();
         }
