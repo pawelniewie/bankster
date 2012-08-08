@@ -36,9 +36,9 @@ public class OfxFactory {
         // YNAB can't handle time zone properly so add enough hours that the imported date will still be on the transaction date
         Transaction t = new Transaction();
         t.setAmount(v);
-        t.setDateInitiated(opDate.toDateMidnight().plus(HALF_DAY).toDate());
-        t.setDatePosted(opDate.toDateMidnight().plus(HALF_DAY).toDate());
-        t.setDateAvailable(acDate.toDateMidnight().plus(HALF_DAY).toDate());
+        t.setDateInitiated(opDate.toDateTime().plus(HALF_DAY).toDate());
+        t.setDatePosted(opDate.toDateTime().plus(HALF_DAY).toDate());
+        t.setDateAvailable(acDate.toDateTime().plus(HALF_DAY).toDate());
         t.setTransactionType(TransactionType.DEBIT);
         t.setName(StringUtils.replace(opDesc, "\n", " "));
         t.setId(createId(t));
