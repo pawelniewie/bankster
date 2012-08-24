@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E5BFAC0415E6D520003C590A /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5BFAC0315E6D520003C590A /* WebKit.framework */; };
+		E5DDB27D15E81E3300E7C070 /* SelectBankViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5DDB27B15E81E3300E7C070 /* SelectBankViewController.m */; };
+		E5DDB27E15E81E3300E7C070 /* SelectBankViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5DDB27C15E81E3300E7C070 /* SelectBankViewController.xib */; };
 		E5E09C2B15D5A76400830ABC /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5E09C2A15D5A76400830ABC /* Cocoa.framework */; };
 		E5E09C3515D5A76400830ABC /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E5E09C3315D5A76400830ABC /* InfoPlist.strings */; };
 		E5E09C3715D5A76400830ABC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E5E09C3615D5A76400830ABC /* main.m */; };
@@ -17,6 +20,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E5BFAC0315E6D520003C590A /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		E5DDB27A15E81E3300E7C070 /* SelectBankViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectBankViewController.h; sourceTree = "<group>"; };
+		E5DDB27B15E81E3300E7C070 /* SelectBankViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectBankViewController.m; sourceTree = "<group>"; };
+		E5DDB27C15E81E3300E7C070 /* SelectBankViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectBankViewController.xib; sourceTree = "<group>"; };
 		E5E09C2615D5A76400830ABC /* Watch My Money.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Watch My Money.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5E09C2A15D5A76400830ABC /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		E5E09C2D15D5A76400830ABC /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -38,6 +45,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E5BFAC0415E6D520003C590A /* WebKit.framework in Frameworks */,
 				E5E09C2B15D5A76400830ABC /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -65,6 +73,7 @@
 		E5E09C2915D5A76400830ABC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E5BFAC0315E6D520003C590A /* WebKit.framework */,
 				E5E09C2A15D5A76400830ABC /* Cocoa.framework */,
 				E5E09C2C15D5A76400830ABC /* Other Frameworks */,
 			);
@@ -84,6 +93,9 @@
 		E5E09C3015D5A76400830ABC /* Watch My Money */ = {
 			isa = PBXGroup;
 			children = (
+				E5DDB27A15E81E3300E7C070 /* SelectBankViewController.h */,
+				E5DDB27B15E81E3300E7C070 /* SelectBankViewController.m */,
+				E5DDB27C15E81E3300E7C070 /* SelectBankViewController.xib */,
 				E5E09C3C15D5A76400830ABC /* AppDelegate.h */,
 				E5E09C3D15D5A76400830ABC /* AppDelegate.m */,
 				E5E09C3F15D5A76500830ABC /* MainMenu.xib */,
@@ -159,6 +171,7 @@
 				E5E09C3515D5A76400830ABC /* InfoPlist.strings in Resources */,
 				E5E09C3B15D5A76400830ABC /* Credits.rtf in Resources */,
 				E5E09C4115D5A76500830ABC /* MainMenu.xib in Resources */,
+				E5DDB27E15E81E3300E7C070 /* SelectBankViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -172,6 +185,7 @@
 				E5E09C3715D5A76400830ABC /* main.m in Sources */,
 				E5E09C3E15D5A76400830ABC /* AppDelegate.m in Sources */,
 				E5E09C4415D5A76500830ABC /* Watch_My_Money.xcdatamodeld in Sources */,
+				E5DDB27D15E81E3300E7C070 /* SelectBankViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -297,6 +311,7 @@
 				E5E09C4915D5A76500830ABC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
