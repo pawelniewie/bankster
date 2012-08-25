@@ -14,11 +14,14 @@
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize banksView = _banksView;
+@synthesize mBankView = _mBankView;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     _banksView = [[SelectBankViewController alloc] initWithNibName:@"SelectBankViewController" bundle:nil];
-    _window.contentView = [_banksView view];
+    _mBankView = [[MBankViewController alloc] initWithNibName:@"MBankViewController" bundle:nil];
+//    _window.contentView = [_banksView view];
+    _window.contentView = [_mBankView view];
 }
 
 // Returns the directory the application uses to store the Core Data store file. This code uses a directory named "com.pawelniewiadomski.Watch_My_Money" in the user's Application Support directory.

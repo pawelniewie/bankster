@@ -1,0 +1,20 @@
+//
+//  MBankViewController.h
+//  Watch My Money
+//
+//  Created by Pawel Niewiadomski on 25.08.2012.
+//  Copyright (c) 2012 Pawel Niewiadomski. All rights reserved.
+//
+
+#import <Cocoa/Cocoa.h>
+#import <WebKit/WebKit.h>
+
+@interface MBankViewController : NSViewController {
+    IBOutlet WebView *browser;
+}
+
+@property (nonatomic, retain) WebView *browser;
+
+- (void) loadView;
+
+@end

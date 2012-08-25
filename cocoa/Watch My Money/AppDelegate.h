@@ -8,11 +8,13 @@
 
 #import <Cocoa/Cocoa.h>
 #import "SelectBankViewController.h"
+#import "MBankViewController.h"
 
 @interface AppDelegate : NSObject <NSApplicationDelegate>
 
 @property (assign) IBOutlet NSWindow *window;
 @property (readonly, nonatomic) SelectBankViewController *banksView;
+@property (readonly, nonatomic) MBankViewController *mBankView;
 
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;

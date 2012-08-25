@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		E5BFAC0415E6D520003C590A /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5BFAC0315E6D520003C590A /* WebKit.framework */; };
+		E5CB3C0715E8F88E00A82725 /* MBankViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5CB3C0515E8F88E00A82725 /* MBankViewController.m */; };
+		E5CB3C0815E8F88E00A82725 /* MBankViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5CB3C0615E8F88E00A82725 /* MBankViewController.xib */; };
 		E5DDB27D15E81E3300E7C070 /* SelectBankViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5DDB27B15E81E3300E7C070 /* SelectBankViewController.m */; };
 		E5DDB27E15E81E3300E7C070 /* SelectBankViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5DDB27C15E81E3300E7C070 /* SelectBankViewController.xib */; };
 		E5E09C2B15D5A76400830ABC /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5E09C2A15D5A76400830ABC /* Cocoa.framework */; };
@@ -21,6 +23,9 @@
 
 /* Begin PBXFileReference section */
 		E5BFAC0315E6D520003C590A /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		E5CB3C0415E8F88E00A82725 /* MBankViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBankViewController.h; sourceTree = "<group>"; };
+		E5CB3C0515E8F88E00A82725 /* MBankViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBankViewController.m; sourceTree = "<group>"; };
+		E5CB3C0615E8F88E00A82725 /* MBankViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MBankViewController.xib; sourceTree = "<group>"; };
 		E5DDB27A15E81E3300E7C070 /* SelectBankViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectBankViewController.h; sourceTree = "<group>"; };
 		E5DDB27B15E81E3300E7C070 /* SelectBankViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectBankViewController.m; sourceTree = "<group>"; };
 		E5DDB27C15E81E3300E7C070 /* SelectBankViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectBankViewController.xib; sourceTree = "<group>"; };
@@ -53,6 +58,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E5CB3C0215E8F87900A82725 /* mBank */ = {
+			isa = PBXGroup;
+			children = (
+				E5CB3C0415E8F88E00A82725 /* MBankViewController.h */,
+				E5CB3C0515E8F88E00A82725 /* MBankViewController.m */,
+				E5CB3C0615E8F88E00A82725 /* MBankViewController.xib */,
+			);
+			name = mBank;
+			sourceTree = "<group>";
+		};
 		E5E09C1B15D5A76400830ABC = {
 			isa = PBXGroup;
 			children = (
@@ -93,6 +108,7 @@
 		E5E09C3015D5A76400830ABC /* Watch My Money */ = {
 			isa = PBXGroup;
 			children = (
+				E5CB3C0215E8F87900A82725 /* mBank */,
 				E5DDB27A15E81E3300E7C070 /* SelectBankViewController.h */,
 				E5DDB27B15E81E3300E7C070 /* SelectBankViewController.m */,
 				E5DDB27C15E81E3300E7C070 /* SelectBankViewController.xib */,
@@ -172,6 +188,7 @@
 				E5E09C3B15D5A76400830ABC /* Credits.rtf in Resources */,
 				E5E09C4115D5A76500830ABC /* MainMenu.xib in Resources */,
 				E5DDB27E15E81E3300E7C070 /* SelectBankViewController.xib in Resources */,
+				E5CB3C0815E8F88E00A82725 /* MBankViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -186,6 +203,7 @@
 				E5E09C3E15D5A76400830ABC /* AppDelegate.m in Sources */,
 				E5E09C4415D5A76500830ABC /* Watch_My_Money.xcdatamodeld in Sources */,
 				E5DDB27D15E81E3300E7C070 /* SelectBankViewController.m in Sources */,
+				E5CB3C0715E8F88E00A82725 /* MBankViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
