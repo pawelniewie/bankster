@@ -29,7 +29,39 @@
 - (void) loadView {
     [super loadView];
     
-    [[browser mainFrame] loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"https://www.mbank.com.pl"]]];
+    NSURLRequest * request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"https://www.mbank.com.pl"]];
+    [[browser mainFrame] loadRequest:request];
+    [browser setFrameLoadDelegate:self];
+}
+
+- (void) webView:(WebView *)sender didFinishLoadForFrame:(WebFrame *)frame {
+    [self attachJQuery:sender];
+    
+    [self promptForLoginCredentials];
+}
+
+- (void) promptForLoginCredentials {
+    [NSApp beginSheet:loginForm modalForWindow:[NSApp keyWindow] modalDelegate:self didEndSelector:@selector(doneEnteringLoginCredentials:returnCode:contextInfo:) contextInfo:nil];
+}
+
+- (void) doneEnteringLoginCredentials:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo {
+    [NSApp endSheet:sheet];
+}
+
+- (void) attachJQuery:(WebView *) webView {
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"jquery-1.8.0" ofType:@"js" inDirectory:@"JavaScript"];
+                          
+    NSData *fileData = [NSData dataWithContentsOfFile:filePath];
+                          
+    NSString *jsString = [[NSMutableString alloc] initWithData:fileData encoding:NSUTF8StringEncoding];
+                          
+    [[webView windowScriptObject ] evaluateWebScript:jsString];
+}
+
+- (void) fillLoginFormWithUserId:(NSString *) userId andPassword: (NSString *) password {
+    [[browser windowScriptObject] evaluateWebScript:@"$('input[name=customer]').val('4359348579');"];
+    [[browser windowScriptObject] evaluateWebScript:@"$('input[name=password]').val('4359348579');"];
+    [[browser windowScriptObject] evaluateWebScript:@"$('#confirm').submit();"];
 }
 
 @end
