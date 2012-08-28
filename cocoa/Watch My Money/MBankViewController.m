@@ -44,8 +44,12 @@
     [NSApp beginSheet:loginForm modalForWindow:[NSApp keyWindow] modalDelegate:self didEndSelector:@selector(doneEnteringLoginCredentials:returnCode:contextInfo:) contextInfo:nil];
 }
 
+- (IBAction) closeLoginSheet: (id)sender {
+    [NSApp endSheet:loginForm];
+}
+
 - (void) doneEnteringLoginCredentials:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo {
-    [NSApp endSheet:sheet];
+    [sheet orderOut:self];
 }
 
 - (void) attachJQuery:(WebView *) webView {

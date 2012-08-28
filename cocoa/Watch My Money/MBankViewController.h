@@ -22,5 +22,6 @@
 - (void) fillLoginFormWithUserId:(NSString *) userId andPassword: (NSString *) password;
 - (void) promptForLoginCredentials;
 - (void) doneEnteringLoginCredentials:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
+- (IBAction) closeLoginSheet: (id)sender;
 
 @end
