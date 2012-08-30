@@ -12,9 +12,18 @@
 @interface MBankViewController : NSViewController {
     IBOutlet WebView *browser;
     IBOutlet NSWindow *loginForm;
+    IBOutlet NSTextField *userIdField;
+    IBOutlet NSSecureTextField *passwordField;
+    IBOutlet NSButton *cancelButton;
+    IBOutlet NSButton *logInButton;
 }
 
 @property (nonatomic, retain) WebView *browser;
+@property (nonatomic, retain) NSWindow *loginForm;
+@property (nonatomic, retain) NSTextField *userIdField;
+@property (nonatomic, retain) NSSecureTextField *passwordField;
+@property (nonatomic, retain) NSButton *cancelButton;
+@property (nonatomic, retain) NSButton *logInButton;
 
 - (void) loadView;
 - (void) webView:(WebView *)sender didFinishLoadForFrame:(WebFrame *)frame;

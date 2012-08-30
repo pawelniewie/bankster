@@ -15,6 +15,11 @@
 @implementation MBankViewController
 
 @synthesize browser;
+@synthesize loginForm;
+@synthesize userIdField;
+@synthesize passwordField;
+@synthesize logInButton;
+@synthesize cancelButton;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -45,11 +50,15 @@
 }
 
 - (IBAction) closeLoginSheet: (id)sender {
-    [NSApp endSheet:loginForm];
+    [NSApp endSheet:loginForm returnCode: (sender == logInButton) ? NSOKButton : NSCancelButton];
 }
 
 - (void) doneEnteringLoginCredentials:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo {
     [sheet orderOut:self];
+    
+    if (returnCode == NSOKButton) {
+        [self fillLoginFormWithUserId: [self.userIdField stringValue] andPassword:[self.passwordField stringValue]];
+    }
 }
 
 - (void) attachJQuery:(WebView *) webView {
@@ -63,8 +72,10 @@
 }
 
 - (void) fillLoginFormWithUserId:(NSString *) userId andPassword: (NSString *) password {
-    [[browser windowScriptObject] evaluateWebScript:@"$('input[name=customer]').val('4359348579');"];
-    [[browser windowScriptObject] evaluateWebScript:@"$('input[name=password]').val('4359348579');"];
+    [[browser windowScriptObject] evaluateWebScript:[NSString stringWithFormat: @"$('input[name=customer]').val('%@');",
+                                                     userId]];
+    [[browser windowScriptObject] evaluateWebScript:[NSString stringWithFormat: @"$('input[name=password]').val('%@');",
+                                                     password]];
     [[browser windowScriptObject] evaluateWebScript:@"$('#confirm').submit();"];
 }
 

@@ -9,8 +9,6 @@
 /* Begin PBXBuildFile section */
 		E5BFAC0415E6D520003C590A /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5BFAC0315E6D520003C590A /* WebKit.framework */; };
 		E5C7C5AC15EAAB0C002E6E65 /* JavaScript in Resources */ = {isa = PBXBuildFile; fileRef = E5C7C5AB15EAAB0B002E6E65 /* JavaScript */; };
-		E5C7C5B015EAB927002E6E65 /* MBankPasswordPromptViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5C7C5AE15EAB927002E6E65 /* MBankPasswordPromptViewController.m */; };
-		E5C7C5B115EAB927002E6E65 /* MBankPasswordPromptViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5C7C5AF15EAB927002E6E65 /* MBankPasswordPromptViewController.xib */; };
 		E5CB3C0715E8F88E00A82725 /* MBankViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5CB3C0515E8F88E00A82725 /* MBankViewController.m */; };
 		E5CB3C0815E8F88E00A82725 /* MBankViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5CB3C0615E8F88E00A82725 /* MBankViewController.xib */; };
 		E5DDB27D15E81E3300E7C070 /* SelectBankViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5DDB27B15E81E3300E7C070 /* SelectBankViewController.m */; };
@@ -27,9 +25,6 @@
 /* Begin PBXFileReference section */
 		E5BFAC0315E6D520003C590A /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		E5C7C5AB15EAAB0B002E6E65 /* JavaScript */ = {isa = PBXFileReference; lastKnownFileType = folder; path = JavaScript; sourceTree = "<group>"; };
-		E5C7C5AD15EAB927002E6E65 /* MBankPasswordPromptViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MBankPasswordPromptViewController.h; path = Source/mBank/MBankPasswordPromptViewController.h; sourceTree = "<group>"; };
-		E5C7C5AE15EAB927002E6E65 /* MBankPasswordPromptViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MBankPasswordPromptViewController.m; path = Source/mBank/MBankPasswordPromptViewController.m; sourceTree = "<group>"; };
-		E5C7C5AF15EAB927002E6E65 /* MBankPasswordPromptViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MBankPasswordPromptViewController.xib; path = Source/mBank/MBankPasswordPromptViewController.xib; sourceTree = "<group>"; };
 		E5CB3C0415E8F88E00A82725 /* MBankViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBankViewController.h; sourceTree = "<group>"; };
 		E5CB3C0515E8F88E00A82725 /* MBankViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBankViewController.m; sourceTree = "<group>"; };
 		E5CB3C0615E8F88E00A82725 /* MBankViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MBankViewController.xib; sourceTree = "<group>"; };
@@ -71,9 +66,6 @@
 				E5CB3C0415E8F88E00A82725 /* MBankViewController.h */,
 				E5CB3C0515E8F88E00A82725 /* MBankViewController.m */,
 				E5CB3C0615E8F88E00A82725 /* MBankViewController.xib */,
-				E5C7C5AD15EAB927002E6E65 /* MBankPasswordPromptViewController.h */,
-				E5C7C5AE15EAB927002E6E65 /* MBankPasswordPromptViewController.m */,
-				E5C7C5AF15EAB927002E6E65 /* MBankPasswordPromptViewController.xib */,
 			);
 			name = mBank;
 			sourceTree = "<group>";
@@ -201,7 +193,6 @@
 				E5DDB27E15E81E3300E7C070 /* SelectBankViewController.xib in Resources */,
 				E5CB3C0815E8F88E00A82725 /* MBankViewController.xib in Resources */,
 				E5C7C5AC15EAAB0C002E6E65 /* JavaScript in Resources */,
-				E5C7C5B115EAB927002E6E65 /* MBankPasswordPromptViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -217,7 +208,6 @@
 				E5E09C4415D5A76500830ABC /* Watch_My_Money.xcdatamodeld in Sources */,
 				E5DDB27D15E81E3300E7C070 /* SelectBankViewController.m in Sources */,
 				E5CB3C0715E8F88E00A82725 /* MBankViewController.m in Sources */,
-				E5C7C5B015EAB927002E6E65 /* MBankPasswordPromptViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
