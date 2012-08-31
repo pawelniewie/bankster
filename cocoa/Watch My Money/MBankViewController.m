@@ -7,6 +7,7 @@
 //
 
 #import "MBankViewController.h"
+#import "Source/mBank/MBankCredentialsWindowController.h"
 
 @interface MBankViewController ()
 
@@ -16,16 +17,12 @@
 
 @synthesize browser;
 @synthesize loginForm;
-@synthesize userIdField;
-@synthesize passwordField;
-@synthesize logInButton;
-@synthesize cancelButton;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // do initialization here
+        loginForm = [[MBankCredentialsWindowController alloc] init];
     }
     
     return self;
@@ -46,18 +43,14 @@
 }
 
 - (void) promptForLoginCredentials {
-    [NSApp beginSheet:loginForm modalForWindow:[NSApp keyWindow] modalDelegate:self didEndSelector:@selector(doneEnteringLoginCredentials:returnCode:contextInfo:) contextInfo:nil];
-}
-
-- (IBAction) closeLoginSheet: (id)sender {
-    [NSApp endSheet:loginForm returnCode: (sender == logInButton) ? NSOKButton : NSCancelButton];
+    [NSApp beginSheet:[loginForm window] modalForWindow:[NSApp keyWindow] modalDelegate:self didEndSelector:@selector(doneEnteringLoginCredentials:returnCode:contextInfo:) contextInfo:nil];
 }
 
 - (void) doneEnteringLoginCredentials:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo {
     [sheet orderOut:self];
     
     if (returnCode == NSOKButton) {
-        [self fillLoginFormWithUserId: [self.userIdField stringValue] andPassword:[self.passwordField stringValue]];
+        [self fillLoginFormWithUserId: [loginForm.userIdField stringValue] andPassword:[loginForm.passwordField stringValue]];
     }
 }
 
@@ -76,7 +69,7 @@
                                                      userId]];
     [[browser windowScriptObject] evaluateWebScript:[NSString stringWithFormat: @"$('input[name=password]').val('%@');",
                                                      password]];
-    [[browser windowScriptObject] evaluateWebScript:@"$('#confirm').submit();"];
+    [[browser windowScriptObject] evaluateWebScript:@"$('#confirm').click();"];
 }
 
 @end
