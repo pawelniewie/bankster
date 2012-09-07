@@ -6,10 +6,16 @@
 //  Copyright (c) 2012 Pawel Niewiadomski. All rights reserved.
 //
 
+#import <Foundation/NSJSONSerialization.h>
+
 #import "MBankViewController.h"
 #import "Source/mBank/MBankCredentialsWindowController.h"
 
-@interface MBankViewController ()
+@interface MBankViewController () {
+    NSURL *loginPageUrl;
+    NSURL *invalidLoginPageUrl;
+    NSURL *framesPageUrl;
+}
 
 @end
 
@@ -23,6 +29,9 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         loginForm = [[MBankCredentialsWindowController alloc] init];
+        loginPageUrl = [NSURL URLWithString:@"https://www.mbank.com.pl/"];
+        invalidLoginPageUrl = [NSURL URLWithString:@"https://www.mbank.com.pl/logon.aspx"];
+        framesPageUrl = [NSURL URLWithString:@"https://www.mbank.com.pl/frames.aspx"];
     }
     
     return self;
@@ -31,15 +40,29 @@
 - (void) loadView {
     [super loadView];
     
-    NSURLRequest * request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"https://www.mbank.com.pl"]];
+    [[NSUserDefaults standardUserDefaults] setBool:TRUE forKey:@"WebKitDeveloperExtras"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    NSURLRequest * request = [NSURLRequest requestWithURL:loginPageUrl];
     [[browser mainFrame] loadRequest:request];
     [browser setFrameLoadDelegate:self];
 }
 
 - (void) webView:(WebView *)sender didFinishLoadForFrame:(WebFrame *)frame {
-    [self attachJQuery:sender];
+    [self runJavaScript:@"jquery-1.8.0" inDirectory:@"JavaScript" andContext:[frame windowObject]];
     
-    [self promptForLoginCredentials];
+    NSURL *currentUrl = [[[frame dataSource] request] URL];
+    
+    if([currentUrl isEqual:loginPageUrl]) {
+        [self promptForLoginCredentials];
+    } else if ([currentUrl isEqual:invalidLoginPageUrl]) {
+        [[sender mainFrame] loadRequest:[NSURLRequest requestWithURL:loginPageUrl]];
+    } else if ([currentUrl isEqual:framesPageUrl]) {
+        NSString *accountsJson = [self runJavaScript:@"getAccounts" inDirectory:@"JavaScript/mBank" andContext:[[frame findFrameNamed:@"MainFrame" ] windowObject]];
+        NSError *errors = nil;
+        NSArray *accounts = [NSJSONSerialization JSONObjectWithData:[accountsJson dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableLeaves error:&errors];
+        
+    }
 }
 
 - (void) promptForLoginCredentials {
@@ -54,14 +77,14 @@
     }
 }
 
-- (void) attachJQuery:(WebView *) webView {
-    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"jquery-1.8.0" ofType:@"js" inDirectory:@"JavaScript"];
-                          
+- (id) runJavaScript:(NSString *)scriptName inDirectory:(NSString *) directory andContext:(WebScriptObject *)webScript {
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:scriptName ofType:@"js" inDirectory:directory];
+    
     NSData *fileData = [NSData dataWithContentsOfFile:filePath];
-                          
+    
     NSString *jsString = [[NSMutableString alloc] initWithData:fileData encoding:NSUTF8StringEncoding];
-                          
-    [[webView windowScriptObject ] evaluateWebScript:jsString];
+    
+    return [webScript evaluateWebScript:jsString];
 }
 
 - (void) fillLoginFormWithUserId:(NSString *) userId andPassword: (NSString *) password {

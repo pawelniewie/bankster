@@ -21,9 +21,9 @@
 
 - (void) loadView;
 - (void) webView:(WebView *)sender didFinishLoadForFrame:(WebFrame *)frame;
-- (void) attachJQuery:(WebView *) webView;
 - (void) fillLoginFormWithUserId:(NSString *) userId andPassword: (NSString *) password;
 - (void) promptForLoginCredentials;
 - (void) doneEnteringLoginCredentials:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
+- (id) runJavaScript:(NSString *) scriptName inDirectory:(NSString *) directory andContext: (WebScriptObject *) webScript;
 
 @end
