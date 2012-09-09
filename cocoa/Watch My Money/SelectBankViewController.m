@@ -21,7 +21,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        bankNames = [NSArray arrayWithObjects:@"mBank", @"Eurobank", nil];
+        bankNames = @[@"mBank", @"Eurobank"];
     }
     return self;
 }
@@ -31,7 +31,7 @@
 }
 
 - (id) tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(int)rowIndex {
-    return [bankNames objectAtIndex:rowIndex];
+    return bankNames[rowIndex];
 }
 
 @end

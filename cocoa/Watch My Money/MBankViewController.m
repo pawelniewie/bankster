@@ -15,6 +15,7 @@
     NSURL *loginPageUrl;
     NSURL *invalidLoginPageUrl;
     NSURL *framesPageUrl;
+    NSURL *accountsListPageUrl;
 }
 
 @end
@@ -32,6 +33,7 @@
         loginPageUrl = [NSURL URLWithString:@"https://www.mbank.com.pl/"];
         invalidLoginPageUrl = [NSURL URLWithString:@"https://www.mbank.com.pl/logon.aspx"];
         framesPageUrl = [NSURL URLWithString:@"https://www.mbank.com.pl/frames.aspx"];
+        accountsListPageUrl = [NSURL URLWithString:@"https://www.mbank.com.pl/accounts_list.aspx"];
     }
     
     return self;
@@ -49,18 +51,21 @@
 }
 
 - (void) webView:(WebView *)sender didFinishLoadForFrame:(WebFrame *)frame {
-    [self runJavaScript:@"jquery-1.8.0" inDirectory:@"JavaScript" andContext:[frame windowObject]];
-    
     NSURL *currentUrl = [[[frame dataSource] request] URL];
     
     if([currentUrl isEqual:loginPageUrl]) {
         [self promptForLoginCredentials];
     } else if ([currentUrl isEqual:invalidLoginPageUrl]) {
         [[sender mainFrame] loadRequest:[NSURLRequest requestWithURL:loginPageUrl]];
-    } else if ([currentUrl isEqual:framesPageUrl]) {
-        NSString *accountsJson = [self runJavaScript:@"getAccounts" inDirectory:@"JavaScript/mBank" andContext:[[frame findFrameNamed:@"MainFrame" ] windowObject]];
+    } else if ([currentUrl isEqual:accountsListPageUrl]) {
+        WebScriptObject *windowObject = [frame windowObject];
+        [self runJavaScript:@"jquery-1.8.0" inDirectory:@"JavaScript" andContext:windowObject];
+        
+        NSString *accountsJson = [self runJavaScript:@"getAccounts" inDirectory:@"JavaScript/mBank" andContext:windowObject];
         NSError *errors = nil;
         NSArray *accounts = [NSJSONSerialization JSONObjectWithData:[accountsJson dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableLeaves error:&errors];
+        [self runJavaScript:@"openHistory" inDirectory:@"JavaScript/mBank" andContext:windowObject];
+        [windowObject callWebScriptMethod:@"openHistory" withArguments:@[accounts[0]]];
         
     }
 }
@@ -88,6 +93,8 @@
 }
 
 - (void) fillLoginFormWithUserId:(NSString *) userId andPassword: (NSString *) password {
+    [self runJavaScript:@"jquery-1.8.0" inDirectory:@"JavaScript" andContext:[browser windowScriptObject]];
+    
     [[browser windowScriptObject] evaluateWebScript:[NSString stringWithFormat: @"$('input[name=customer]').val('%@');",
                                                      userId]];
     [[browser windowScriptObject] evaluateWebScript:[NSString stringWithFormat: @"$('input[name=password]').val('%@');",
