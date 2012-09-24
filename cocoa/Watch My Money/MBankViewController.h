@@ -12,11 +12,9 @@
 @class MBankCredentialsWindowController;
 
 @interface MBankViewController : NSViewController {
-    IBOutlet WebView *browser;
-    MBankCredentialsWindowController *loginForm;
 }
 
-@property (nonatomic, retain) WebView *browser;
+@property (nonatomic, weak) IBOutlet WebView *browser;
 @property (nonatomic, retain) MBankCredentialsWindowController *loginForm;
 
 - (void) loadView;

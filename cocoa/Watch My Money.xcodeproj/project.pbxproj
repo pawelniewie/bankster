@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E53A384E1610EFD900AE5100 /* getHistory.js in Sources */ = {isa = PBXBuildFile; fileRef = E53A384D1610EFD900AE5100 /* getHistory.js */; };
 		E562911315F0079D0012983A /* MBankCredentialsWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = E562911115F0079D0012983A /* MBankCredentialsWindowController.m */; };
 		E562911415F0079D0012983A /* MBankCredentialsWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E562911215F0079D0012983A /* MBankCredentialsWindowController.xib */; };
 		E588ECC215FCFC5F00F497CC /* openHistory.js in Sources */ = {isa = PBXBuildFile; fileRef = E588ECC115FCFC5F00F497CC /* openHistory.js */; };
@@ -28,6 +29,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E53A384D1610EFD900AE5100 /* getHistory.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = getHistory.js; path = "Watch My Money/JavaScript/mBank/getHistory.js"; sourceTree = "<group>"; };
 		E562911015F0079D0012983A /* MBankCredentialsWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MBankCredentialsWindowController.h; path = Source/mBank/MBankCredentialsWindowController.h; sourceTree = "<group>"; };
 		E562911115F0079D0012983A /* MBankCredentialsWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MBankCredentialsWindowController.m; path = Source/mBank/MBankCredentialsWindowController.m; sourceTree = "<group>"; };
 		E562911215F0079D0012983A /* MBankCredentialsWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MBankCredentialsWindowController.xib; path = Source/mBank/MBankCredentialsWindowController.xib; sourceTree = "<group>"; };
@@ -87,6 +89,7 @@
 		E5E09C1B15D5A76400830ABC = {
 			isa = PBXGroup;
 			children = (
+				E53A384D1610EFD900AE5100 /* getHistory.js */,
 				E588ECC115FCFC5F00F497CC /* openHistory.js */,
 				E59B7E9215FA85E0006D7FBC /* getAccounts.js */,
 				E5E09C3015D5A76400830ABC /* Watch My Money */,
@@ -228,6 +231,7 @@
 				E562911315F0079D0012983A /* MBankCredentialsWindowController.m in Sources */,
 				E59B7E9315FA85E0006D7FBC /* getAccounts.js in Sources */,
 				E588ECC215FCFC5F00F497CC /* openHistory.js in Sources */,
+				E53A384E1610EFD900AE5100 /* getHistory.js in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

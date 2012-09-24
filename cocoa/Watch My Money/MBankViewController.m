@@ -16,24 +16,23 @@
     NSURL *invalidLoginPageUrl;
     NSURL *framesPageUrl;
     NSURL *accountsListPageUrl;
+    NSURL *historyPageUrl;
 }
 
 @end
 
 @implementation MBankViewController
 
-@synthesize browser;
-@synthesize loginForm;
-
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        loginForm = [[MBankCredentialsWindowController alloc] init];
+        self.loginForm = [[MBankCredentialsWindowController alloc] init];
         loginPageUrl = [NSURL URLWithString:@"https://www.mbank.com.pl/"];
         invalidLoginPageUrl = [NSURL URLWithString:@"https://www.mbank.com.pl/logon.aspx"];
         framesPageUrl = [NSURL URLWithString:@"https://www.mbank.com.pl/frames.aspx"];
         accountsListPageUrl = [NSURL URLWithString:@"https://www.mbank.com.pl/accounts_list.aspx"];
+        historyPageUrl = [NSURL URLWithString:@"https://www.mbank.com.pl/account_oper_list.aspx"];
     }
     
     return self;
@@ -46,19 +45,19 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
     
     NSURLRequest * request = [NSURLRequest requestWithURL:loginPageUrl];
-    [[browser mainFrame] loadRequest:request];
-    [browser setFrameLoadDelegate:self];
+    [[_browser mainFrame] loadRequest:request];
+    [_browser setFrameLoadDelegate:self];
 }
 
 - (void) webView:(WebView *)sender didFinishLoadForFrame:(WebFrame *)frame {
     NSURL *currentUrl = [[[frame dataSource] request] URL];
+    WebScriptObject *windowObject = [frame windowObject];
     
     if([currentUrl isEqual:loginPageUrl]) {
         [self promptForLoginCredentials];
     } else if ([currentUrl isEqual:invalidLoginPageUrl]) {
         [[sender mainFrame] loadRequest:[NSURLRequest requestWithURL:loginPageUrl]];
     } else if ([currentUrl isEqual:accountsListPageUrl]) {
-        WebScriptObject *windowObject = [frame windowObject];
         [self runJavaScript:@"jquery-1.8.0" inDirectory:@"JavaScript" andContext:windowObject];
         
         NSString *accountsJson = [self runJavaScript:@"getAccounts" inDirectory:@"JavaScript/mBank" andContext:windowObject];
@@ -66,19 +65,23 @@
         NSArray *accounts = [NSJSONSerialization JSONObjectWithData:[accountsJson dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableLeaves error:&errors];
         [self runJavaScript:@"openHistory" inDirectory:@"JavaScript/mBank" andContext:windowObject];
         [windowObject callWebScriptMethod:@"openHistory" withArguments:@[accounts[0]]];
+    } else if ([currentUrl isEqual:historyPageUrl]) {
+        [self runJavaScript:@"jquery-1.8.0" inDirectory:@"JavaScript" andContext:windowObject];
         
+        [self runJavaScript:@"getHistory" inDirectory:@"JavaScript/mBank" andContext:windowObject];
+        [windowObject callWebScriptMethod:@"getHistory" withArguments:@[@"30"]];
     }
 }
 
 - (void) promptForLoginCredentials {
-    [NSApp beginSheet:[loginForm window] modalForWindow:[NSApp keyWindow] modalDelegate:self didEndSelector:@selector(doneEnteringLoginCredentials:returnCode:contextInfo:) contextInfo:nil];
+    [NSApp beginSheet:[_loginForm window] modalForWindow:[NSApp keyWindow] modalDelegate:self didEndSelector:@selector(doneEnteringLoginCredentials:returnCode:contextInfo:) contextInfo:nil];
 }
 
 - (void) doneEnteringLoginCredentials:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo {
     [sheet orderOut:self];
     
     if (returnCode == NSOKButton) {
-        [self fillLoginFormWithUserId: [loginForm.userIdField stringValue] andPassword:[loginForm.passwordField stringValue]];
+        [self fillLoginFormWithUserId: [_loginForm.userIdField stringValue] andPassword:[_loginForm.passwordField stringValue]];
     }
 }
 
@@ -93,13 +96,13 @@
 }
 
 - (void) fillLoginFormWithUserId:(NSString *) userId andPassword: (NSString *) password {
-    [self runJavaScript:@"jquery-1.8.0" inDirectory:@"JavaScript" andContext:[browser windowScriptObject]];
+    [self runJavaScript:@"jquery-1.8.0" inDirectory:@"JavaScript" andContext:[_browser windowScriptObject]];
     
-    [[browser windowScriptObject] evaluateWebScript:[NSString stringWithFormat: @"$('input[name=customer]').val('%@');",
+    [[_browser windowScriptObject] evaluateWebScript:[NSString stringWithFormat: @"$('input[name=customer]').val('%@');",
                                                      userId]];
-    [[browser windowScriptObject] evaluateWebScript:[NSString stringWithFormat: @"$('input[name=password]').val('%@');",
+    [[_browser windowScriptObject] evaluateWebScript:[NSString stringWithFormat: @"$('input[name=password]').val('%@');",
                                                      password]];
-    [[browser windowScriptObject] evaluateWebScript:@"$('#confirm').click();"];
+    [[_browser windowScriptObject] evaluateWebScript:@"$('#confirm').click();"];
 }
 
 @end

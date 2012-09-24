@@ -9,16 +9,12 @@
 #import <Cocoa/Cocoa.h>
 
 @interface MBankCredentialsWindowController : NSWindowController {
-    IBOutlet NSTextField *userIdField;
-    IBOutlet NSSecureTextField *passwordField;
-    IBOutlet NSButton *cancelButton;
-    IBOutlet NSButton *logInButton;
 }
 
-@property (nonatomic, retain) NSTextField *userIdField;
-@property (nonatomic, retain) NSSecureTextField *passwordField;
-@property (nonatomic, retain) NSButton *cancelButton;
-@property (nonatomic, retain) NSButton *logInButton;
+@property (nonatomic, weak) IBOutlet NSTextField *userIdField;
+@property (nonatomic, weak) IBOutlet NSSecureTextField *passwordField;
+@property (nonatomic, weak) IBOutlet NSButton *cancelButton;
+@property (nonatomic, weak) IBOutlet NSButton *logInButton;
 
 - (id) init;
 - (IBAction) closeLoginSheet: (id)sender;
