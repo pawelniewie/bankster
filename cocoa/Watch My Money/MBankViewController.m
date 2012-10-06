@@ -68,8 +68,18 @@
     } else if ([currentUrl isEqual:historyPageUrl]) {
         [self runJavaScript:@"jquery-1.8.0" inDirectory:@"JavaScript" andContext:windowObject];
         
-        [self runJavaScript:@"getHistory" inDirectory:@"JavaScript/mBank" andContext:windowObject];
-        [windowObject callWebScriptMethod:@"getHistory" withArguments:@[@"30"]];
+        id noData = [windowObject evaluateWebScript:@"$('#account_operations_NoData').length"];
+        id detailsData = [windowObject evaluateWebScript:@"$('#account_operations').length"];
+        if (noData != nil && [noData isKindOfClass:[NSNumber class]] && ((NSNumber *) noData) == [NSNumber numberWithInt:1]) {
+            // break, no results
+            
+        } else if (detailsData != nil && [detailsData isKindOfClass:[NSNumber class]] && [((NSNumber *) detailsData) intValue] > 0) {
+            id transactions = [self runJavaScript:@"getTransactions" inDirectory:@"JavaScript/mBank" andContext:windowObject];
+            NSLog(@"%@", transactions);
+        } else {
+            [self runJavaScript:@"getHistory" inDirectory:@"JavaScript/mBank" andContext:windowObject];
+            [windowObject callWebScriptMethod:@"getHistory" withArguments:@[@"30"]];
+        }
     }
 }
 

@@ -10,6 +10,7 @@
 		E53A384E1610EFD900AE5100 /* getHistory.js in Sources */ = {isa = PBXBuildFile; fileRef = E53A384D1610EFD900AE5100 /* getHistory.js */; };
 		E562911315F0079D0012983A /* MBankCredentialsWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = E562911115F0079D0012983A /* MBankCredentialsWindowController.m */; };
 		E562911415F0079D0012983A /* MBankCredentialsWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E562911215F0079D0012983A /* MBankCredentialsWindowController.xib */; };
+		E580DED616207BAB0056879C /* getTransactions.js in Sources */ = {isa = PBXBuildFile; fileRef = E580DED516207BAB0056879C /* getTransactions.js */; };
 		E588ECC215FCFC5F00F497CC /* openHistory.js in Sources */ = {isa = PBXBuildFile; fileRef = E588ECC115FCFC5F00F497CC /* openHistory.js */; };
 		E59B7E9315FA85E0006D7FBC /* getAccounts.js in Sources */ = {isa = PBXBuildFile; fileRef = E59B7E9215FA85E0006D7FBC /* getAccounts.js */; };
 		E59B7E9515FA8B86006D7FBC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5E09C2F15D5A76400830ABC /* Foundation.framework */; };
@@ -33,6 +34,7 @@
 		E562911015F0079D0012983A /* MBankCredentialsWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MBankCredentialsWindowController.h; path = Source/mBank/MBankCredentialsWindowController.h; sourceTree = "<group>"; };
 		E562911115F0079D0012983A /* MBankCredentialsWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MBankCredentialsWindowController.m; path = Source/mBank/MBankCredentialsWindowController.m; sourceTree = "<group>"; };
 		E562911215F0079D0012983A /* MBankCredentialsWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MBankCredentialsWindowController.xib; path = Source/mBank/MBankCredentialsWindowController.xib; sourceTree = "<group>"; };
+		E580DED516207BAB0056879C /* getTransactions.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = getTransactions.js; path = "Watch My Money/JavaScript/mBank/getTransactions.js"; sourceTree = "<group>"; };
 		E588ECC115FCFC5F00F497CC /* openHistory.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = openHistory.js; path = "Watch My Money/JavaScript/mBank/openHistory.js"; sourceTree = "<group>"; };
 		E59B7E9215FA85E0006D7FBC /* getAccounts.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = getAccounts.js; path = "Watch My Money/JavaScript/mBank/getAccounts.js"; sourceTree = "<group>"; };
 		E5BFAC0315E6D520003C590A /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
@@ -89,6 +91,7 @@
 		E5E09C1B15D5A76400830ABC = {
 			isa = PBXGroup;
 			children = (
+				E580DED516207BAB0056879C /* getTransactions.js */,
 				E53A384D1610EFD900AE5100 /* getHistory.js */,
 				E588ECC115FCFC5F00F497CC /* openHistory.js */,
 				E59B7E9215FA85E0006D7FBC /* getAccounts.js */,
@@ -232,6 +235,7 @@
 				E59B7E9315FA85E0006D7FBC /* getAccounts.js in Sources */,
 				E588ECC215FCFC5F00F497CC /* openHistory.js in Sources */,
 				E53A384E1610EFD900AE5100 /* getHistory.js in Sources */,
+				E580DED616207BAB0056879C /* getTransactions.js in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
