@@ -1,15 +1,6 @@
 package com.pawelniewiadomski.budget.banks.mbank;
 
 import com.atlassian.pageobjects.*;
-import com.atlassian.pageobjects.binder.InjectPageBinder;
-import com.atlassian.pageobjects.binder.StandardModule;
-import com.atlassian.pageobjects.elements.ElementModule;
-import com.atlassian.pageobjects.elements.timeout.PropertiesBasedTimeouts;
-import com.atlassian.pageobjects.elements.timeout.TimeoutsModule;
-import com.atlassian.webdriver.AtlassianWebDriverModule;
-import com.atlassian.webdriver.pageobjects.DefaultWebDriverTester;
-import com.atlassian.webdriver.pageobjects.WebDriverTester;
-import com.google.inject.Injector;
 import com.pawelniewiadomski.budget.banks.AbstractTestedProduct;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -23,6 +14,6 @@ public class MBankTestedProduct extends AbstractTestedProduct {
 
     public LoginPage gotoLoginPage()
     {
-        return getPageBinder().navigateToAndBind(LoginPage.class);
+        return getPageBinder().navigateToAndBind(SelectVersionPage.class).useOldVersion();
     }
 }
