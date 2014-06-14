@@ -2,8 +2,11 @@ package com.pawelniewiadomski.budget.banks.eurobank;
 
 import com.atlassian.pageobjects.elements.ElementBy;
 import com.atlassian.pageobjects.elements.PageElement;
+import com.atlassian.pageobjects.elements.query.TimedCondition;
+
 import com.pawelniewiadomski.budget.banks.AbstractPage;
 import com.pawelniewiadomski.budget.banks.mbank.MainFramePage;
+import com.sun.jna.platform.win32.WinDef;
 
 import javax.annotation.Nonnull;
 
@@ -17,8 +20,12 @@ public class LoginPage extends AbstractPage {
     @ElementBy(name="tokenSprzetowy")
     private PageElement token;
 
+    @ElementBy(id = "login_next")
+    private PageElement loginNext;
+
     @ElementBy(name = "zaloguj")
     private PageElement confirm;
+    private boolean passwordVisible;
 
     @Override
     public String getUrl() {
@@ -46,5 +53,16 @@ public class LoginPage extends AbstractPage {
     public MainPage confirm() {
         confirm.click();
         return pageBinder.bind(MainPage.class);
+    }
+
+    public TimedCondition isPasswordVisible()
+    {
+        return password.timed().isVisible();
+    }
+
+    public LoginPage clickNext()
+    {
+        loginNext.click();
+        return pageBinder.bind(LoginPage.class);
     }
 }

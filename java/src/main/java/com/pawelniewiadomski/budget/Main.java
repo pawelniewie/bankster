@@ -17,10 +17,15 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         ResponseEnvelope envelope = null;
-        if (args.length == 2) {
-            envelope = new MBankClient().downloadOperationsHistory(args[0], args[1]);
+        if (args.length != 3) {
+            System.out.println("Nieprawidłowe argumenty");
+            System.exit(111);
+        }
+
+        if ("mbank".equals(args[0])) {
+            envelope = new MBankClient().downloadOperationsHistory(args[1], args[2]);
         } else {
-            envelope = new EurobankClient().downloadOperationsHistory(args[0], args[1], args[2]);
+            envelope = new EurobankClient().downloadOperationsHistory(args[1], args[2]);
         }
 
         File output = File.createTempFile("export", ".ofx");

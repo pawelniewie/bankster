@@ -1,6 +1,8 @@
 package com.pawelniewiadomski.budget.banks.eurobank;
 
 import com.atlassian.pageobjects.ProductInstance;
+import com.atlassian.pageobjects.elements.query.Poller;
+
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
@@ -22,15 +24,17 @@ import java.util.Map;
 
 public class EurobankClient {
 
-    public ResponseEnvelope downloadOperationsHistory(@Nonnull String username, @Nonnull String password, @Nonnull String token) throws IOException {
+    public ResponseEnvelope downloadOperationsHistory(@Nonnull String username, @Nonnull String password) throws IOException {
         EurobankTestedProduct bank = new EurobankTestedProduct(new EurobankProductInstance());
         try {
-            MainPage page = bank.gotoLoginPage().setCustomer(username).setPassword(password).setToken(token).confirm();
-            Iterable<String> accounts = page.getAccounts();
+            LoginPage page = bank.gotoLoginPage().setCustomer(username).clickNext();
+            Poller.waitUntilTrue(page.isPasswordVisible());
+            MainPage bankPage = page.setPassword(password).confirm();
+            Iterable<String> accounts = bankPage.getAccounts();
             List<BankStatementResponseTransaction> responses = Lists.newArrayList();
 
             for(String accountName : accounts) {
-                TransactionHistoryPage historyPage = page.openTransactionHistory(accountName).submit();
+                TransactionHistoryPage historyPage = bankPage.openTransactionHistory(accountName).submit();
                 List<Transaction> transactions = Lists.newArrayList();
                 for (;;) {
                     Iterables.addAll(transactions, historyPage.getTransactions());
@@ -52,7 +56,7 @@ public class EurobankClient {
                     responses.add(OfxFactory.createBankStatementResponseTransaction(response));
                 }
 
-                page = historyPage.goToMain();
+                bankPage = historyPage.goToMain();
             }
             return OfxFactory.createResponseEnvelope(responses);
         } finally {
